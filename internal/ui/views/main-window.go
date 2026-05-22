@@ -19,10 +19,15 @@ func mainWindow(w fyne.Window) {
 		showIntegrationScreen(w)
 	})
 
+	equationsBtn := widget.NewButton("Численное решение уравнений", func() {
+		showEquationsScreen(w)
+	})
+
 	menuContainer := container.NewVBox(
 		title,
 		widget.NewSeparator(),
 		numericalIntegrationBtn,
+		equationsBtn,
 	)
 
 	w.SetContent(menuContainer)
