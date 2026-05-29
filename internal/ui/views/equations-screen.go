@@ -15,6 +15,8 @@ import (
 func showEquationsScreen(w fyne.Window) {
 	w.SetTitle("Численное решение нелинейных уравнений")
 
+	parentApp := fyne.CurrentApp()
+
 	equationEntry := widget.NewEntry()
 	equationEntry.SetText("ln(x) + x - 2")
 
@@ -50,6 +52,11 @@ func showEquationsScreen(w fyne.Window) {
 	helpBtn := widget.NewButton("Как вводить уравнения? (Инструкция)", func() {
 		openHelpWindow()
 	})
+
+	plotBtn := widget.NewButton("Показать график уравнения", func() {
+		OpenGraphWindow(parentApp, equationEntry.Text, errorLabel)
+	})
+
 	calcBtn := widget.NewButton("Рассчитать корень", func() {
 		errorLabel.Hide()
 		resultCard.Objects = nil
@@ -132,12 +139,13 @@ func showEquationsScreen(w fyne.Window) {
 		ShowMainWindow(w)
 	})
 
+	buttonsGrid := container.NewGridWithColumns(3, helpBtn, plotBtn, calcBtn)
+
 	mainLayout := container.NewVBox(
 		widget.NewLabelWithStyle("Параметры уравнения", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
 		formGrid,
 		layout.NewSpacer(),
-		helpBtn,
-		calcBtn,
+		buttonsGrid,
 		errorLabel,
 		resultCard,
 		layout.NewSpacer(),
